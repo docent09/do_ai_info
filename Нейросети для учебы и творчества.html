@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Нейросети для учёбы и творчества</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f5f9fe;
+      font-family: 'Inter', sans-serif;
+      padding: 2rem 1.5rem 3rem;
+      color: #1a2639;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #1f3a6b, #3b5f9e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero h1 i {
+      background: #eef4ff;
+      padding: 0.5rem;
+      border-radius: 16px;
+      font-size: 2rem;
+      color: #2a4b8d;
+      -webkit-text-fill-color: #2a4b8d;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin: 2.5rem 0 1.2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 3px solid rgba(59, 95, 158, 0.2);
+      padding-bottom: 0.5rem;
+    }
+
+    .section-title i {
+      color: #2a4b8d;
+      font-size: 1.6rem;
+      width: 2rem;
+    }
+
+    .grid-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 24px;
+      padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+      box-shadow: 0 8px 24px rgba(0, 20, 40, 0.06), 0 2px 4px rgba(0,0,0,0.02);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 32px -8px rgba(26, 38, 57, 0.12);
+      background: white;
+      border-color: #cddff5;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.6rem;
+    }
+
+    .card h3 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #0d1c38;
+      letter-spacing: -0.01em;
+      word-break: break-word;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .card h3 i {
+      color: #2a4b8d;
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-right: 2px;
+    }
+
+    .card-link {
+      font-size: 0.85rem;
+      color: #1f3a6b;
+      background: #e9f0fa;
+      padding: 0.25rem 0.8rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: 0.15s;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    .card-link i {
+      font-size: 0.8rem;
+    }
+
+    .card-link:hover {
+      background: #d2e0f5;
+      color: #0b1d3a;
+      border-color: #a3bce0;
+    }
+
+    .capabilities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.4rem;
+      margin: 0.4rem 0 0.2rem 0;
+    }
+
+    .capability-item {
+      background: #ecf3fc;
+      border-radius: 40px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1f3a6b;
+      border: 1px solid rgba(255,255,255,0.3);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .capability-item i {
+      margin-right: 4px;
+      font-size: 0.7rem;
+      color: #2a4b8d;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .resource-card .card-link {
+      background: #e3ecf9;
+    }
+
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .programs-grid .card {
+      padding: 1rem 1rem 0.9rem;
+    }
+
+    .programs-grid .card h4 {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0b1d3a;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .programs-grid .card h4 i {
+      color: #2a4b8d;
+      font-size: 0.9rem;
+    }
+
+    .footer-note {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #d9e5f2;
+      font-size: 0.9rem;
+      color: #3f5a7a;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .footer-note i {
+      margin-right: 0.3rem;
+      color: #2a4b8d;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 1rem 0.75rem; }
+      .hero h1 { font-size: 1.6rem; flex-wrap: wrap; }
+      .grid-table { grid-template-columns: 1fr; }
+      .resource-grid { grid-template-columns: 1fr; }
+      .programs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <h1>
+      <i class="fas fa-robot"></i> 
+      Нейросети для учёбы и творчества
+    </h1>
+  </div>
+
+  <!-- основные нейросети -->
+  <div class="section-title">
+    <i class="fas fa-brain"></i> Нейросети и ИИ-инструменты
+  </div>
+  <div class="grid-table">
+
+    <!-- DeepSeek -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-comment-dots"></i> DeepSeek</h3>
+        <a class="card-link" href="https://chat.deepseek.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-paragraph"></i> Текст</span>
+        <span class="capability-item"><i class="fas fa-code"></i> Код</span>
+        <span class="capability-item"><i class="fas fa-file-alt"></i> Файлы</span>
+        <span class="capability-item"><i class="fas fa-language"></i> Перевод</span>
+        <span class="capability-item"><i class="fas fa-robot"></i> Репетитор</span>
+      </div>
+    </div>
+
+    <!-- Qwen -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-calculator"></i> Qwen</h3>
+        <a class="card-link" href="https://chat.qwen.ai/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-paragraph"></i> Текст</span>
+        <span class="capability-item"><i class="fas fa-code"></i> Код</span>
+        <span class="capability-item"><i class="fas fa-calculator"></i> Расчёты</span>
+        <span class="capability-item"><i class="fas fa-chart-line"></i> Анализ данных</span>
+      </div>
+    </div>
+
+    <!-- Алиса AI -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-image"></i> Алиса AI</h3>
+        <a class="card-link" href="https://alice.yandex.ru/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-paragraph"></i> Текст</span>
+        <span class="capability-item"><i class="fas fa-image"></i> Изображения</span>
+        <span class="capability-item"><i class="fas fa-pen-fancy"></i> Редактор</span>
+        <span class="capability-item"><i class="fas fa-question-circle"></i> Файлы</span>
+      </div>
+    </div>
+
+    <!-- ГигаЧат -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-comment"></i> ГигаЧат</h3>
+        <a class="card-link" href="https://giga.chat/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-paragraph"></i> Текст</span>
+        <span class="capability-item"><i class="fas fa-image"></i> Изображения</span>
+        <span class="capability-item"><i class="fas fa-pen-fancy"></i> Редактор</span>
+        <span class="capability-item"><i class="fas fa-microphone"></i> Голос</span>
+      </div>
+    </div>
+
+    <!-- YandexGPT -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-video"></i> YandexGPT</h3>
+        <a class="card-link" href="https://300.ya.ru" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-video"></i> Пересказ видео</span>
+        <span class="capability-item"><i class="fas fa-file-alt"></i> Пересказ статей</span>
+        <span class="capability-item"><i class="fas fa-link"></i> По ссылке</span>
+        <span class="capability-item"><i class="fas fa-compress-alt"></i> Сжатие</span>
+      </div>
+    </div>
+
+    <!-- Suno AI -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-music"></i> Suno AI</h3>
+        <a class="card-link" href="https://suno.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-music"></i> Генерация музыки</span>
+      </div>
+    </div>
+
+    <!-- Udio -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-headphones"></i> Udio</h3>
+        <a class="card-link" href="https://udio.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-music"></i> Генерация музыки</span>
+      </div>
+    </div>
+
+    <!-- Adobe Express -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-pen-fancy"></i> Adobe Express</h3>
+        <a class="card-link" href="https://new.express.adobe.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-crop"></i> Редактор изображений</span>
+        <span class="capability-item"><i class="fas fa-layer-group"></i> Коллажи</span>
+        <span class="capability-item"><i class="fas fa-font"></i> Текст на фото</span>
+      </div>
+    </div>
+
+    <!-- Перепиксель -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-vector-square"></i> Перепиксель</h3>
+        <a class="card-link" href="http://zkoridor.ru:92/sd/nneditor.html" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-magic"></i> Нейро-редактор</span>
+        <span class="capability-item"><i class="fas fa-paint-brush"></i> Стилизация</span>
+        <span class="capability-item"><i class="fas fa-eraser"></i> Удаление объектов</span>
+      </div>
+    </div>
+
+    <!-- Clipdrop -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-magic"></i> Clipdrop</h3>
+        <a class="card-link" href="https://clipdrop.co/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-crop"></i> Удаление фона</span>
+        <span class="capability-item"><i class="fas fa-undo-alt"></i> Ретушь</span>
+        <span class="capability-item"><i class="fas fa-sun"></i> Освещение</span>
+        <span class="capability-item"><i class="fas fa-expand"></i> Увеличение</span>
+      </div>
+    </div>
+
+    <!-- Шедеврум -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-paintbrush"></i> Шедеврум</h3>
+        <a class="card-link" href="https://shedevrum.ai/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-image"></i> Генерация изображений</span>
+        <span class="capability-item"><i class="fas fa-film"></i> Генерация видео</span>
+      </div>
+    </div>
+
+    <!-- Leonardo -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-palette"></i> Leonardo</h3>
+        <a class="card-link" href="https://leonardo.ai/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-image"></i> Генерация</span>
+        <span class="capability-item"><i class="fas fa-film"></i> Видео</span>
+        <span class="capability-item"><i class="fas fa-vector-square"></i> Дизайн</span>
+        <span class="capability-item"><i class="fas fa-cube"></i> 3D</span>
+      </div>
+    </div>
+
+    <!-- Playground.ai -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-layer-group"></i> Playground.ai</h3>
+        <a class="card-link" href="https://playgroundai.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-pencil-ruler"></i> Дизайн</span>
+        <span class="capability-item"><i class="fas fa-palette"></i> Стилизация</span>
+      </div>
+    </div>
+
+    <!-- Gamma -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-slideshare"></i> Gamma</h3>
+        <a class="card-link" href="https://gamma.app/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-file-powerpoint"></i> Генерация презентаций</span>
+        <span class="capability-item"><i class="fas fa-file-alt"></i> Структурирование</span>
+        <span class="capability-item"><i class="fas fa-magic"></i> Дизайн</span>
+      </div>
+    </div>
+
+    <!-- Сократик -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-file-pen"></i> Сократик</h3>
+        <a class="card-link" href="https://sokratic.ru" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-file-powerpoint"></i> Генерация презентаций</span>
+        <span class="capability-item"><i class="fas fa-graduation-cap"></i> Учебные материалы</span>
+        <span class="capability-item"><i class="fas fa-brain"></i> Генерация идей</span>
+      </div>
+    </div>
+
+    <!-- Slidepoint -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-chart-pie"></i> Slidepoint</h3>
+        <a class="card-link" href="https://slidepoint.online/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-file-powerpoint"></i> Генерация презентаций</span>
+        <span class="capability-item"><i class="fas fa-edit"></i> Редактирование</span>
+        <span class="capability-item"><i class="fas fa-share-alt"></i> Шаблоны</span>
+      </div>
+    </div>
+
+    <!-- Diaclass -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-chalkboard-user"></i> Diaclass</h3>
+        <a class="card-link" href="https://diaclass.ru/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-file-powerpoint"></i> Генерация презентаций</span>
+        <span class="capability-item"><i class="fas fa-book-open"></i> Учебные материалы</span>
+        <span class="capability-item"><i class="fas fa-users"></i> Совместная работа</span>
+      </div>
+    </div>
+
+    <!-- Teachable Machine -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-robot"></i> Teachable Machine</h3>
+        <a class="card-link" href="https://teachablemachine.withgoogle.com/train" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-brain"></i> Машинное обучение</span>
+        <span class="capability-item"><i class="fas fa-eye"></i> Компьютерное зрение</span>
+        <span class="capability-item"><i class="fas fa-hand-paper"></i> Распознавание жестов</span>
+      </div>
+    </div>
+
+    <!-- VisionPipe -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-eye"></i> VisionPipe</h3>
+        <a class="card-link" href="https://visionpipe3d.quochuy.dev/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-cube"></i> 3D-зрение</span>
+        <span class="capability-item"><i class="fas fa-brain"></i> Машинное обучение</span>
+        <span class="capability-item"><i class="fas fa-arrows-alt"></i> Обработка видео</span>
+      </div>
+    </div>
+
+    <!-- Qwen кодер -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-code"></i> Qwen кодер</h3>
+        <a class="card-link" href="https://coder.qwen.ai/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-code"></i> Вайб-кодинг</span>
+        <span class="capability-item"><i class="fas fa-bug"></i> Отладка</span>
+        <span class="capability-item"><i class="fas fa-sync-alt"></i> Рефакторинг</span>
+      </div>
+    </div>
+
+    <!-- Bolt -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-bolt"></i> Bolt</h3>
+        <a class="card-link" href="https://bolt.new/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <div class="capabilities">
+        <span class="capability-item"><i class="fas fa-code"></i> Вайб-кодинг</span>
+        <span class="capability-item"><i class="fas fa-rocket"></i> Быстрая разработка</span>
+        <span class="capability-item"><i class="fas fa-globe"></i> Web-приложения</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Полезные ресурсы -->
+  <div class="section-title">
+    <i class="fas fa-link"></i> Полезные ресурсы
+  </div>
+  <div class="resource-grid">
+    <div class="card resource-card">
+      <div class="card-header">
+        <h4><i class="fas fa-check-circle"></i> Думейт</h4>
+        <a class="card-link" href="https://app.domate.ru/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <p>Проверка текста на оригинальность и следы ИИ, антиплагиат</p>
+      <div class="tags"><span class="tag"></span></div>
+    </div>
+    <div class="card resource-card">
+      <div class="card-header">
+        <h4><i class="fas fa-short-link"></i> Кликер</h4>
+        <a class="card-link" href="https://clck.ru/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <p>Сокращение длинных ссылок</p>
+      <div class="tags"><span class="tag"></span></div>
+    </div>
+    <div class="card resource-card">
+      <div class="card-header">
+        <h4><i class="fas fa-file-pdf"></i> Работа с PDF</h4>
+        <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
+          <a class="card-link" style="font-size:0.75rem;" href="https://pdf.io/ru/" target="_blank">pdf.io</a>
+          <a class="card-link" style="font-size:0.75rem;" href="https://www.ilovepdf.com/ru" target="_blank">iLovePDF</a>
+        </div>
+      </div>
+      <p>Разделение, объединение, сжатие, преобразование и др.</p>
+      <div class="tags"><span class="tag"></span></div>
+    </div>
+    <div class="card resource-card">
+      <div class="card-header">
+        <h4><i class="fas fa-arrows-rotate"></i> Конвертеры</h4>
+        <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
+          <a class="card-link" style="font-size:0.75rem;" href="https://convertio.co/ru/" target="_blank">Convertio</a>
+          <a class="card-link" style="font-size:0.75rem;" href="https://123apps.com/ru/" target="_blank">123Apps</a>
+        </div>
+      </div>
+      <p>Конвертация файлов в другие форматы</p>
+      <div class="tags"><span class="tag"></span></div>
+    </div>
+    <div class="card resource-card">
+      <div class="card-header">
+        <h4><i class="fas fa-gif"></i> Редактор GIF</h4>
+        <a class="card-link" href="https://ezgif.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Перейти</a>
+      </div>
+      <p>Создание, редактирование, оптимизация анимаций.</p>
+      <div class="tags"><span class="tag"></span></div>
+    </div>
+  </div>
+
+  <!-- Полезные программы для ПК -->
+  <div class="section-title">
+    <i class="fas fa-desktop"></i> Полезные программы для ПК
+  </div>
+  <div class="programs-grid">
+    <div class="card">
+      <h4><i class="fas fa-paint-brush"></i> GIMP</h4>
+      <a class="card-link" href="https://www.gimp.org/downloads/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Скачать</a>
+      <p style="margin-top:0.4rem;">Бесплатный редактор изображений</p>
+    </div>
+    <div class="card">
+      <h4><i class="fas fa-play-circle"></i> VLC media player</h4>
+      <a class="card-link" href="https://www.videolan.org/vlc/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Скачать</a>
+      <p style="margin-top:0.4rem;">Бесплатный медиаплеер с поддержкой всех форматов</p>
+    </div>
+    <div class="card">
+      <h4><i class="fas fa-video"></i> OBS Studio</h4>
+      <a class="card-link" href="https://obsproject.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Скачать</a>
+      <p style="margin-top:0.4rem;">Бесплатная программа для записи видео и стриминга</p>
+    </div>
+    <div class="card">
+      <h4><i class="fas fa-microphone"></i> Audacity</h4>
+      <a class="card-link" href="https://www.audacityteam.org/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Скачать</a>
+      <p style="margin-top:0.4rem;">Бесплатный аудиоредактор для записи и обработки звука</p>
+    </div>
+    <div class="card">
+      <h4><i class="fab fa-python"></i> IDLE Python</h4>
+      <a class="card-link" href="https://www.python.org/downloads/" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Скачать</a>
+      <p style="margin-top:0.4rem;">Базовый интерпретатор Python</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <span><i class="fas fa-graduation-cap"></i> Для школьников дополнительного образования</span>
+    <span><i class="fas fa-robot"></i> Актуально на 2026 год</span>
+  </div>
+
+</div>
+</body>
+</html>
